@@ -6,7 +6,7 @@
 3. [Automatic-Changelog](#Automatic-CHANGELOG)
 4. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 5. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
-6. [Cypress](#Cypress)[(Documentación Oficial)](https://www.cypress.io/)
+6. [Cypress](#Cypress) [(Documentación Oficial)](https://www.cypress.io/)
 
 ## Arquitectura de inicio de proyecto
 ```
