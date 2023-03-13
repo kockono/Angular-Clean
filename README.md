@@ -1,4 +1,5 @@
 # Arquitectura de inicio de proyecto
+[Example](https://github.com/kockono/Arquitecturas-de-proyectos)
 ```
 frontend/src
 │      ├── app
@@ -45,9 +46,9 @@ frontend/src
 ```
 
 # Dependencías importantes
-1. [Eslint/Prettier](https://gist.github.com/kockono/9f121aadb8f596683173ddaffd11f013)
+1. [Eslint/Prettier]()
 2. [Automatic-Changelog](#Automatic-CHANGELOG)
-3. [SonnarQube](#SonnarQube) [(Documentación)](https://gist.github.com/kockono/afd22f97245089fe2db96deda6789f77)
+3. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 4. [Sentry](https://sentry.io/welcome/)
 
 <br/>
