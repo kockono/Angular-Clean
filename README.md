@@ -1,5 +1,5 @@
 # Arquitectura de inicio de proyecto
-[Example](https://github.com/kockono/Arquitecturas-de-proyectos)
+[Example](https://github.com/kockono/Angular-Clean)
 ```
 frontend/src
 │      ├── app
