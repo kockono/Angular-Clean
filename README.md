@@ -10,7 +10,6 @@
 
 ## Arquitectura de inicio de proyecto
 ```
-<a href="https://github.com/kockono/Angular-Clean">Example</a>
 frontend/src
 │      ├── app
 │      │    ├── components
