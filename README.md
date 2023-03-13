@@ -48,9 +48,10 @@ frontend/src
 # Dependencías importantes
 1. [Eslint/Prettier]()
 2. [Automatic-Changelog](#Automatic-CHANGELOG)
-3. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
+3. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 4. [Sentry](https://sentry.io/welcome/)
-
+5. [Cypress](#Cypress)[(Documentación Oficial)](https://www.cypress.io/)
+6. 
 <br/>
 
 # Eslint/Prettier
@@ -326,6 +327,9 @@ sonar.test=src
 ```sh
 npm run sonar
 ```
+
+## Cypress
+
 
 ## Modulos importantes
 #### Formularios, Formularios reactivos, Manejo de peticiones de backend
