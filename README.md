@@ -52,7 +52,7 @@ frontend/src
 3. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 4. [Sentry](https://sentry.io/welcome/)
 5. [Cypress](#Cypress)[(Documentación Oficial)](https://www.cypress.io/)
-6. 
+
 <br/>
 
 # Eslint/Prettier
