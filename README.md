@@ -6,7 +6,7 @@
 3. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 4. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 5. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
-6. [Cypress](#Cypress) [(Documentación Oficial)](https://www.cypress.io/)
+6. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
 ## Arquitectura de inicio de proyecto
 ```
@@ -329,8 +329,7 @@ sonar.test=src
 ```sh
 npm run sonar
 ```
-
-## Cypress
+## Sentry
 ### for Angular 12 or newer:
 ```sh
 npm install @sentry/angular-ivy
@@ -338,6 +337,41 @@ npm install @sentry/angular-ivy
 ### for Angular 10 and 11:
 ```sh
 npm install @sentry/angular
+```
+
+```ts
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { NgModule, ErrorHandler } from "@angular/core";
+// import * as Sentry from "@sentry/angular"; // for Angular 10 and 11 instead
+import * as Sentry from "@sentry/angular-ivy";
+
+Sentry.init({
+  dsn: "https://<key>@sentry.io/<project>"
+});
+
+@NgModule({
+  // ...
+  providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+  ],
+  // ...
+})
+class AppModule {}
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .then(success => console.log('Bootstrap success'))
+  .catch(err => console.error(err));
+```
+
+## Cypress
+```sh
+npm install cypress --save-dev
 ```
 
 ## Modulos importantes
