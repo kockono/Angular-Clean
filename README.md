@@ -331,7 +331,14 @@ npm run sonar
 ```
 
 ## Cypress
-
+### for Angular 12 or newer:
+```sh
+npm install @sentry/angular-ivy
+```
+### for Angular 10 and 11:
+```sh
+npm install @sentry/angular
+```
 
 ## Modulos importantes
 #### Formularios, Formularios reactivos, Manejo de peticiones de backend
