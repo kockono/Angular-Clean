@@ -2,7 +2,7 @@
 
 # Dependencías importantes
 1. [Arquitectura de inicio de proyecto](#Arquitectura-de-inicio-de-proyecto)
-2. [Eslint/Prettier](#Eslint/Prettier)
+2. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 3. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 4. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 5. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
