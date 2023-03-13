@@ -47,7 +47,7 @@ frontend/src
 ```
 
 # Dependencías importantes
-1. [Eslint/Prettier]()
+1. [Eslint/Prettier](#Eslint/Prettier)
 2. [Automatic-Changelog](#Automatic-CHANGELOG)
 3. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 4. [Sentry](https://sentry.io/welcome/)
