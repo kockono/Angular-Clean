@@ -138,12 +138,6 @@ filename: `.eslintrc.json`
   ]
 }
 ```
-
-#### Crear release
-```sh
-npm run release
-```
-
 ### Prettier Configuration
 Filename: `.prettierrc`
 ```json
@@ -276,6 +270,10 @@ filename: `package.json`
     }
   }
 }
+```
+#### Crear release
+```sh
+npm run release
 ```
 
 ### SonnarQube
