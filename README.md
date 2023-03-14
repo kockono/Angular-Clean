@@ -137,9 +137,11 @@ filename: `.eslintrc.json`
     }
   ]
 }
-
 ```
-
+#### Crear release
+```sh
+npm run release
+```
 
 ### Prettier Configuration
 Filename: `.prettierrc`
