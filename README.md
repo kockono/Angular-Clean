@@ -22,6 +22,7 @@ frontend/src
 │      │    ├── pipes
 │      │    ├── utils
 │      │    ├── interfaces
+│      │    ├── resolver
 │      │    ├── pages
 │      │          ├── pages.routing.ts
 │      │          └── pages.module.ts
