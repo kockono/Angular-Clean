@@ -66,7 +66,7 @@ frontend/src
 <br/>
 
 # Modelos
-#### 
+#### Se utilizan en formularios o se requiere una funcionalidad extra a solo la data, en este ejemplo con los datos obtenidos creamos el nombre completo del usuario
 ```ts
 export class ProductosModel {
   
@@ -96,11 +96,11 @@ export interface UsuarioInterface {
 ```
 
 ```ts
-return this.http<UsuarioInterface>('http://localhost:3200/api/getUsuarios');
+return this.http.get<UsuarioInterface>('http://localhost:3200/api/getUsuarios');
 ```
 
 # Types
-#### Utilizado cuando existen ciertos tipos del campo 
+#### Utilizado cuando existe solo ciertos criterios o posibles casos
 ```ts
 type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre'
 ```
