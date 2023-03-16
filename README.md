@@ -23,6 +23,7 @@ frontend/src
 │      │    ├── utils
 │      │    ├── interfaces
 │      │    ├── resolver
+│      │          └── servicio.resolver.ts
 │      │    ├── pages
 │      │          ├── pages.routing.ts
 │      │          └── pages.module.ts
@@ -264,6 +265,10 @@ filename: `package.json`
             {
               "type": "feat",
               "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
             }
           ]
         }
