@@ -5,6 +5,10 @@
 2. [Models](#Modelos)
 3. [Interfaces](#Interfaces)
 4. [Types](#Types)
+5. [Resolvers]
+6. [Guards]
+7. [Helpers]
+8. [Utils]
 5. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 7. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
@@ -80,7 +84,7 @@ export class ProductosModel {
 ```
 
 # Interfaces
-#### Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas
+#### Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas, un ejemplo sería la una petición http
 ### Ejemplos
 ```ts
 export interface UsuarioInterface {
