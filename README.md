@@ -2,11 +2,14 @@
 
 # Dependencías importantes
 1. [Arquitectura de inicio de proyecto](#Arquitectura-de-inicio-de-proyecto)
-2. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
-3. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
-4. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
-5. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
-6. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
+2. [Models](#Modelos)
+3. [Interfaces](#Interfaces)
+4. [Types](#Types)
+5. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
+6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
+7. [SonnarQube 9.9](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
+8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
+9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
 ## Arquitectura de inicio de proyecto
 ```
@@ -57,6 +60,46 @@ frontend/src
 ```
 
 <br/>
+
+# Modelos
+#### 
+```ts
+export class ProductosModel {
+  
+  constructor(
+      public id        : number,
+      public nombres   : apellido;
+      public apellido  : string;
+      public apellido2 : string;
+  ) { }
+  
+  get nombreCompleto() {
+    return `${nombres} ${apellido} ${apellido2}`
+  }
+}
+```
+
+# Interfaces
+#### Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas
+### Ejemplos
+```ts
+export interface UsuarioInterface {
+  id        : number;
+  nombres   : apellido;
+  apellido  : string;
+  apellido2 : string;
+}
+```
+
+```ts
+return this.http<UsuarioInterface>('http://localhost:3200/api/getUsuarios');
+```
+
+# Types
+#### Utilizado cuando existen ciertos tipos del campo 
+```ts
+type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre'
+```
 
 # Eslint/Prettier
 ### For Most Recent Version
