@@ -6,9 +6,9 @@
 3. [Interfaces](#Interfaces)
 4. [Types](#Types)
 5. [Resolvers](#Resolvers)
-6. [Guards]
-7. [Helpers]
-8. [Utils]
+6. [Guards](#Guards)
+7. [Helpers](#Helpers)
+8. [Utils](#Utils)
 5. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 7. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
@@ -342,6 +342,12 @@ filename: `package.json`
 ```sh
 npm run release
 ```
+
+## Guards
+
+## Helpers
+
+##
 
 ## SonnarQube
 Requisitos: [JDK 11]
