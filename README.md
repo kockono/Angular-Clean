@@ -66,8 +66,8 @@ frontend/src
 
 <br/>
 
-# Modelos
-#### Se utilizan en formularios o se requiere una funcionalidad extra a solo la data, en este ejemplo con los datos obtenidos creamos el nombre completo del usuario
+## Modelos
+Se utilizan en formularios o se requiere una funcionalidad extra a solo la data, en este ejemplo con los datos obtenidos creamos el nombre completo del usuario
 ```ts
 export class ProductosModel {
   
