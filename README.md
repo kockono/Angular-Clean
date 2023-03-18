@@ -28,6 +28,7 @@ frontend/src
 │      │    ├── services
 │      │    ├── pipes
 │      │    ├── utils
+│      │          └── confirm-toast.ts
 │      │    ├── interfaces
 │      │    ├── resolver
 │      │          └── servicio.resolver.ts
@@ -36,8 +37,8 @@ frontend/src
 │      │          └── pages.module.ts
 │      │    ├── models
 │      │    ├── shared
-│      │          ├── navbar
-│      │          ├── breadcrumbs
+│      │          ├── navbar.ts
+│      │          ├── breadcrumbs.ts
 │      │          └── shared.module.ts
 │      │    ├── interceptors
 │      │    └── guards
