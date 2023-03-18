@@ -5,7 +5,7 @@
 2. [Models](#Modelos)
 3. [Interfaces](#Interfaces)
 4. [Types](#Types)
-5. [Resolvers]
+5. [Resolvers](#Resolvers)
 6. [Guards]
 7. [Helpers]
 8. [Utils]
@@ -72,9 +72,9 @@ export class ProductosModel {
   
   constructor(
       public id        : number,
-      public nombres   : apellido;
-      public apellido  : string;
-      public apellido2 : string;
+      public nombres   : string,
+      public apellido  : string,
+      public apellido2 : string,
   ) { }
   
   get nombreCompleto() {
@@ -89,7 +89,7 @@ export class ProductosModel {
 ```ts
 export interface UsuarioInterface {
   id        : number;
-  nombres   : apellido;
+  nombres   : string;
   apellido  : string;
   apellido2 : string;
 }
@@ -102,7 +102,20 @@ return this.http.get<UsuarioInterface>('http://localhost:3200/api/getUsuarios');
 # Types
 #### Utilizado cuando existe solo ciertos criterios o posibles casos
 ```ts
-type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre'
+type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre';
+```
+# Resolvers
+#### Permite recuperar la informacion antes de que se cargue, un ejemplo es cuando hacemos click a un link y queremos precargar la información o en un buscador antes de hacer click al producto pre cargar la información del producto.
+```ts
+export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
+
+  constructor( public service:EndpointsService) { }
+
+  resolve(route: ActivatedRouteSnapshot ){
+    return this.service.getProducto().pipe(
+      catchError( error => of(error));
+  }  
+}
 ```
 
 # Eslint/Prettier
