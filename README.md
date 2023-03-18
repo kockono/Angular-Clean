@@ -84,8 +84,8 @@ export class ProductosModel {
 }
 ```
 
-# Interfaces
-#### Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas, un ejemplo sería la una petición http
+## Interfaces
+Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas, un ejemplo sería la una petición http
 ### Ejemplos
 ```ts
 export interface UsuarioInterface {
@@ -100,13 +100,13 @@ export interface UsuarioInterface {
 return this.http.get<UsuarioInterface>('http://localhost:3200/api/getUsuarios');
 ```
 
-# Types
-#### Utilizado cuando existe solo ciertos criterios o posibles casos
+## Types
+Utilizado cuando existe solo ciertos criterios o posibles casos
 ```ts
 type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre';
 ```
-# Resolvers
-#### Permite recuperar la informacion antes de que se cargue, un ejemplo es cuando hacemos click a un link y queremos precargar la información o en un buscador antes de hacer click al producto pre cargar la información del producto.
+## Resolvers
+Permite recuperar la informacion antes de que se cargue, un ejemplo es cuando hacemos click a un link y queremos precargar la información o en un buscador antes de hacer click al producto pre cargar la información del producto.
 ```ts
 export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
 
