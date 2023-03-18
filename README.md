@@ -344,10 +344,32 @@ npm run release
 ```
 
 ## Guards
+```ts
+
+```
 
 ## Helpers
+Las funciones helpers resuelven son una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros proces son formulario 
+En este ejemplo valida un formulario que sea valido y tambien toca todos los campos inputs para validar que no esten vacios
+```ts
+export function isValidForm2(simpleForm:any):boolean {
+  
+  if ( simpleForm.invalid ) { return false; }
 
-##
+    Object.values(simpleForm.controls).forEach((control) => {
+      if (control instanceof FormGroup) 
+        Object.values(control.controls).forEach((control) => control.markAsTouched());
+      else 
+        simpleForm.markAllAsTouched();
+    });
+    return true;
+}
+```
+
+## Utils
+```ts
+
+```
 
 ## SonnarQube
 Requisitos: [JDK 11]
