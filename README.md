@@ -11,7 +11,7 @@
 8. [Utils]
 5. [Eslint/Prettier](#Eslint/Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
-7. [SonnarQube](#SonnarQube9.9) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
+7. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
 9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
@@ -343,7 +343,7 @@ filename: `package.json`
 npm run release
 ```
 
-## SonnarQube 9.9
+## SonnarQube
 Requisitos: [JDK 11]
 #### 1. Pullear la imagen para crear un servidor de sonnarqube
 ```sh
