@@ -5,7 +5,7 @@
 2. [Models](#Modelos)
 3. [Interfaces](#Interfaces)
 4. [Types](#Types)
-5. [Resolvers](#Resolvers)
+5. [Resolvers](#Resolvers)[(Documentacion-Oficial)](https://angular.io/api/router/Resolve)
 6. [Guards](#Guards)
 7. [Helpers](#Helpers)
 8. [Utils](#Utils)
