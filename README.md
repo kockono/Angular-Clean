@@ -156,6 +156,7 @@ filename: `.eslintrc.json`
         "plugin:prettier/recommended"
       ],
       "rules": {
+        "max-lines-per-function": ["error", 20],
         "@angular-eslint/component-class-suffix": [
           "error",
           {
