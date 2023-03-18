@@ -17,42 +17,42 @@
 
 ## Arquitectura de inicio de proyecto
 ```
-frontend/src
-│      ├── app
-│      │    ├── components
+frontend/src/
+│      ├── app/
+│      │    ├── components/
 │      │          └── components.module.ts
-│      │    ├── auth
+│      │    ├── auth/
 │      │          └── auth.module.ts
-│      │    ├── 404
-│      │    ├── helpers
-│      │    ├── services
-│      │    ├── pipes
-│      │    ├── utils
+│      │    ├── 404/
+│      │    ├── helpers/
+│      │    ├── services/
+│      │    ├── pipes/
+│      │    ├── utils/
 │      │          └── confirm-toast.ts
-│      │    ├── interfaces
-│      │    ├── resolver
+│      │    ├── interfaces/
+│      │    ├── resolvers/
 │      │          └── servicio.resolver.ts
-│      │    ├── pages
+│      │    ├── pages/
 │      │          ├── pages.routing.ts
 │      │          └── pages.module.ts
-│      │    ├── models
-│      │    ├── shared
+│      │    ├── models/
+│      │    ├── shared/
 │      │          ├── navbar.ts
 │      │          ├── breadcrumbs.ts
 │      │          └── shared.module.ts
-│      │    ├── interceptors
-│      │    └── guards
-│      ├── assets
-│      │    ├── dictionarios
-│      │    ├── images
-│      │    ├── icons
-│      │    ├── js
-│      │    ├── mock
-│      │    └── css
+│      │    ├── interceptors/
+│      │    └── guards/
+│      ├── assets/
+│      │    ├── dictionarios/
+│      │    ├── images/
+│      │    ├── icons/
+│      │    ├── js/
+│      │    ├── mock/
+│      │    └── css/
 │      └── app.routing.module.ts
-├── node_modules
-├── .github
-│      └── workflows
+├── node_modules/
+├── .github/
+│      └── workflows/
 │             └── push.yml
 ├── sonar-project.properties
 ├── .eslintrc.json
