@@ -53,9 +53,11 @@ frontend/src/
 ├── node_modules/
 ├── .github
 │      └── workflows
-│             └── push.yml
+│             ├── build.yml
+│             └── lint.yml
 ├── sonar-project.properties
 ├── .eslintrc.json
+├── .eslintignore
 ├── .env
 ├── .gitignore
 ├── package.json
