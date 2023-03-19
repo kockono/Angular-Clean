@@ -1,0 +1,7 @@
+.scannerwork/
+.husky/
+.eslintrc.json
+.angular
+.github
+dist/
+cypress/
