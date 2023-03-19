@@ -177,7 +177,7 @@ filename: `.eslintrc.json`
         "max-len": [
           "error",
           {
-              "code": 120,
+              "code": 130,
               "ignoreComments": true,
               "ignoreUrls": true,
               "ignoreStrings": true,
