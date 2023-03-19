@@ -177,14 +177,14 @@ filename: `.eslintrc.json`
         "max-len": [
           "error",
           {
-              "code": 130,
+              "code": 130 ,
               "ignoreComments": true,
               "ignoreUrls": true,
               "ignoreStrings": true,
               "ignoreTemplateLiterals": true
           }
         ],
-        "max-nested-callbacks": ["error", 3],
+        "max-nested-callbacks": ["error", 3], // Maximo de anidación en Ifs, functions etc.
         "max-lines-per-function": [ "warn", { "max": 20, "skipBlankLines": true, "skipComments": true } ],
         "@typescript-eslint/no-inferrable-types": [
           2,
@@ -193,7 +193,6 @@ filename: `.eslintrc.json`
             "ignoreProperties": true
           }
         ]
-
       }
     },
 
@@ -209,6 +208,17 @@ filename: `.eslintrc.json`
   ]
 }
 
+
+```
+Filename `.eslintignore`
+```.gitignore
+.scannerwork/
+.husky/
+.eslintrc.json
+.angular
+.github
+dist/
+cypress/
 ```
 
 Filename: `.prettierignore`
