@@ -157,7 +157,8 @@ filename: `.eslintrc.json`
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates"
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "strict"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
