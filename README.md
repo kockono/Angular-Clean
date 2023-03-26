@@ -212,8 +212,34 @@ filename: `.eslintrc.json`
   ]
 }
 
-
 ```
+
+Nos permite validar el eslint a la hora de subir el proyecto
+Filename `liny.yml`
+```yaml
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['14.x']
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint
+```
+
 Filename `.eslintignore`
 ```.gitignore
 .scannerwork/
