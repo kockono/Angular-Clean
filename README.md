@@ -225,6 +225,11 @@ Filename `liny.yml`
 name: CI
 
 on: [push, pull_request]
+# on:
+#   push: # Any time you push in master will check de compile
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
 
 jobs:
   build:
@@ -244,8 +249,8 @@ jobs:
       - name: Lint
         run: npm run lint
 ```
-
 Filename `.eslintignore`
+
 ```.gitignore
 .scannerwork/
 .husky/
