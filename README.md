@@ -9,6 +9,7 @@
 6. [Guards](#Guards)
 7. [Helpers](#Helpers)
 8. [Utils](#Utils)
+9. [Interceptors](#Interceptors)
 5. [Eslint Prettier](#Eslint-Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 7. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
@@ -49,6 +50,8 @@ frontend/src/
 │      │    ├── js
 │      │    ├── mock
 │      │    └── css
+│      ├── app.component.ts
+│      ├── app.module.ts
 │      └── app.routing.module.ts
 ├── node_modules/
 ├── .github
@@ -213,8 +216,10 @@ filename: `.eslintrc.json`
 }
 
 ```
+### ESLint Action Yaml 
+Nos permite validar el eslint a la hora de subir el proyecto o mergearlo a la arma main
+</br>
 
-Nos permite validar el eslint a la hora de subir el proyecto
 Filename `liny.yml`
 ```yaml
 name: CI
