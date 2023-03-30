@@ -393,7 +393,7 @@ npm run release
 ```
 
 ## Helpers
-Las funciones helpers resuelven son una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros proces son formulario 
+Las funciones helpers resuelven, son  una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros procesos, como lo son son formularios entre otros.
 En este ejemplo valida un formulario que sea valido y tambien toca todos los campos inputs para validar que no esten vacios
 ```ts
 export function isValidForm2(simpleForm:any):boolean {
