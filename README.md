@@ -76,7 +76,7 @@ frontend/src/
 
 <br/>
 
-### Si existe un componente complejo con demasiadas interfaces, se puede crear una carpeta de modelos y interfaces en el componente
+#### Si existe un componente complejo con demasiadas interfaces, se puede crear una carpeta de modelos y interfaces en el componente
 ```sh
 ├── components
 │      ├── component-name
