@@ -21,7 +21,12 @@
 frontend/src/
 │      ├── app
 │      │    ├── components
-│      │          └── components.module.ts
+│      │    │     ├── component-name
+│      │    │     │    ├── name.validation.component.ts
+│      │    │     │    ├── name.component.ts
+│      │    │     │    ├── name.component.html
+│      │    │     │    └── name.component.scss
+│      │    │     └── components.module.ts
 │      │    ├── auth
 │      │          └── auth.module.ts
 │      │    ├── 404
@@ -71,6 +76,18 @@ frontend/src/
 
 <br/>
 
+### Si existe un componente complejo con demasiadas interfaces, se puede crear una carpeta de modelos y interfaces en el componente
+```sh
+├── components
+│      ├── component-name
+│      │    ├── models
+│      │    ├── interfaces
+│      │    ├── name.validation.component.ts
+│      │    ├── name.component.ts
+│      │    ├── name.component.html
+│      │    └── name.component.scss
+```
+
 ## Modelos
 Se utilizan en formularios o se requiere una funcionalidad extra a solo la data, en este ejemplo con los datos obtenidos creamos el nombre completo del usuario
 ```ts
@@ -90,7 +107,7 @@ export class ProductosModel {
 ```
 
 ## Interfaces
-Cuando tus datos no se veran modificados, datos provinientes del backend, o no requieras instanceas, un ejemplo sería la una petición http
+Cuando tus datos no se veran modificados, datos provinientes del backend, un ejemplo sería la una petición http
 ### Ejemplos
 ```ts
 export interface UsuarioInterface {
