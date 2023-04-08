@@ -17,7 +17,7 @@
 9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 
 ## Arquitectura de inicio de proyecto
-```
+```sh
 frontend/src/
 │      ├── app
 │      │    ├── components
@@ -73,8 +73,6 @@ frontend/src/
 ├── CHANGELOG.md
 └── README.md
 ```
-
-<br/>
 
 #### Si existe un componente complejo con demasiadas interfaces, se puede crear una carpeta de modelos y interfaces en el componente
 ```sh
