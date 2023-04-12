@@ -158,7 +158,7 @@ npm i prettier prettier-eslint eslint-config-prettier eslint-plugin-prettier -D
 ### ESLint configuration 
 filename: `.eslintrc.json`
 
-[Documentation Eslint ](https://github.com/angular-eslint/angular-eslint#notes-for-eslint-plugin-prettier-users)
+[Documentation Eslint](https://github.com/angular-eslint/angular-eslint#notes-for-eslint-plugin-prettier-users)
 
 ```json
 {
@@ -230,6 +230,18 @@ filename: `.eslintrc.json`
   ]
 }
 
+```
+### Ignorar Archivos
+
+FileName: `tsconfig.json`
+```json
+{
+  "compileOnSave": false,
+  "exclude": ["karma.conf.ts"],
+  "compilerOptions": {
+    "baseUrl": "./"
+  }
+}
 ```
 ### ESLint Action Yaml 
 Nos permite validar el eslint a la hora de subir el proyecto o mergearlo a la arma main
