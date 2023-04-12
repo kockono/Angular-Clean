@@ -85,6 +85,43 @@ frontend/src/
 │      │    ├── name.component.html
 │      │    └── name.component.scss
 ```
+## Configuración Tsconfig
+```sh
+{
+  "compileOnSave": false,
+  "exclude": ["karma.conf.ts"],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}
+```
+#### Usar Exclude para ignorar archivos
 
 ## Modelos
 Se utilizan en formularios o se requiere una funcionalidad extra a solo la data, en este ejemplo con los datos obtenidos creamos el nombre completo del usuario
@@ -231,18 +268,21 @@ filename: `.eslintrc.json`
 }
 
 ```
-### Ignorar Archivos
 
-FileName: `tsconfig.json`
-```json
-{
-  "compileOnSave": false,
-  "exclude": ["karma.conf.ts"],
-  "compilerOptions": {
-    "baseUrl": "./"
-  }
-}
+### Ignorar Archivos 
+Filename `.eslintignore`
+```sh
+karma.conf.ts
+.gitignore
+.scannerwork/
+.husky/
+.eslintrc.json
+.angular
+.github
+dist/
+cypress/
 ```
+
 ### ESLint Action Yaml 
 Nos permite validar el eslint a la hora de subir el proyecto o mergearlo a la arma main
 </br>
@@ -275,17 +315,6 @@ jobs:
         run: npm install
       - name: Lint
         run: npm run lint
-```
-Filename `.eslintignore`
-
-```.gitignore
-.scannerwork/
-.husky/
-.eslintrc.json
-.angular
-.github
-dist/
-cypress/
 ```
 
 Filename: `.prettierignore`
