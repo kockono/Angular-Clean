@@ -15,7 +15,7 @@
 7. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
 9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
-10. [Karma](#karma-config)
+10. [Karma](#karma-config) [(Documentación Oficial)](https://karma-runner.github.io/latest/index.html)
 
 ## Arquitectura de inicio de proyecto
 ```sh
