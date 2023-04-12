@@ -373,12 +373,12 @@ root/
 ```
 ### Crea el CHANGELOG.md y guarda el comando .husky/commit-msg en la carpeta .husky
 ```sh
-echo > CHANGELOG.md && mkdir .husky && cd .husky && echo npx commitlint --edit > commit-msg
+echo > CHANGELOG.md && mkdir .husky && cd .husky && echo npx commitlint --edit > commit-msg && cd ..
 ```
 
 ### Configuración basica en package.json
 ```sh
-echo > package.json
+npm init
 ```
 filename: `package.json`
 ```json
