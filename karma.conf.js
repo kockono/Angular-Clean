@@ -11,7 +11,6 @@ module.exports = function (config) {
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
-      require('karma-jquery')
     ],
     client: {
       jasmine: {
@@ -26,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/migration-angular-14'),
+      dir: require('path').join(__dirname, './coverage/clean-architecture'),
       subdir: '.',
       reporters: [
         { type: 'html' },
@@ -40,7 +39,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome','ChromeHeadless'],
     customLaunchers: {
-      ChromeHeadlessCI: {
+      ChromeHeadlessCI: { 
         base: 'ChromeHeadless',
         flags: ['--no-sandbox'],
       }
