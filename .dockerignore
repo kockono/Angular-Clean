@@ -1,0 +1,10 @@
+/.git
+/.devcontainer
+/.kube
+/.github
+/.ci
+README.md
+Dockerfile
+.dockerignore
+/node_modules/
+/dist
