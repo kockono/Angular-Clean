@@ -9,7 +9,7 @@
  *
  * @function {@link_getItemsLocalStorage} - Metodo para obtención del dato parseado
  */
-export function getItemsLocalStorage(itemName:string):any {
-  let item : any = localStorage.getItem(itemName);
+export function getItemsLocalStorage(itemName:string) {
+  const item:string | null = localStorage.getItem(itemName) || "";
   return JSON.parse(item);
 }

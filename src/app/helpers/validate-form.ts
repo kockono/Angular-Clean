@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
  * @param simpleForm       - Formulario enviado desde el Html
  * @var simpleForm.invalid - Valida si se respeto lo indicado
  */
-export function isValidForm(simpleForm:any):boolean {
+export function isValidForm( simpleForm:FormGroup ):boolean {
   if ( !simpleForm.invalid ) return false;
     Object.values(simpleForm.controls).forEach((control) => {
       if (control instanceof FormGroup) {
