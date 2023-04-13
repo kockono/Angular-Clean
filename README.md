@@ -626,6 +626,29 @@ module.exports = function (config) {
   });
 };
 ```
+#### Importar karma en el archivo de configuración de angular
+
+filename: `angular.json`
+```json
+"test": {
+  "builder": "@angular-devkit/build-angular:karma",
+  "options": {
+    "karmaConfig": "karma.conf.js",
+    "main": "src/test.ts",
+    "polyfills": "src/polyfills.ts",
+    "tsConfig": "tsconfig.spec.json",
+    "assets": [
+      "src/favicon.ico",
+      "src/assets"
+    ],
+    "styles": [
+      "src/styles.scss"
+    ],
+    "scripts": []
+  }
+}
+```
+
 
 ## Modulos importantes
 #### Formularios, Formularios reactivos, Manejo de peticiones de backend
