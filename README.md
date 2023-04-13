@@ -1,6 +1,6 @@
 [Example](https://github.com/kockono/Angular-Clean)
 
-# Dependencías importantes
+# Dependencías importantes (Angular 15.2.4)
 1. [Arquitectura de inicio de proyecto](#arquitectura-de-inicio-de-proyecto)
 2. [Models](#modelos)
 3. [Interfaces](#interfaces)
