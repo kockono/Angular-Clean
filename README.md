@@ -10,7 +10,7 @@
 7. [Helpers](#Helpers)
 8. [Utils](#Utils)
 9. [Interceptors](#Interceptors)
-5. [Eslint Prettier](#Eslint-Prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
+5. [Eslint Prettier](#eslint-prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
 6. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
 7. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
 8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
