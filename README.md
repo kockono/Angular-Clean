@@ -16,6 +16,7 @@
 8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
 9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 10. [Karma](#karma-config) [(Documentación Oficial)](https://karma-runner.github.io/latest/index.html)
+11. [Documentacion](#Documentacion)
 
 ## Arquitectura de inicio de proyecto
 ```sh
@@ -657,6 +658,56 @@ filename: `app.module.ts`
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule  } from '@angular/forms';
+```
+# Documentacion
+La documentación permite tener comprensión en los procesos, metodos, variables etc.
+
+#### Documentación de variables
+En esta sección permite saber que tipos de usuario existen y donde se obtiene el tipo del usuario linkeando al metodo tambien podemos poner un @example
+```ts
+  /** 
+   * @property {string} tipoUsuario : Guarda el tipo de usuario {@link getUserInfo()}
+   * @example 'cliente' | 'marca'
+   */
+  public tipoUsuario  : string  = '';
+```
+### Documentación de metodos
+Podemos utilizar @author para saber quien creo la sección, la versión comunmente es mas utilizada en clases o componentes globales, un dato importante
+el @link solo funcionara si se encuentra dentro de la clase o si es una function fuera de la clase, también podemos usar function si no esta dentro de una clase
+```ts
+  /**
+  * @author Chris Cobos
+  * @version 1.0.0
+  * 
+  * @method {@link buscarProducto()}      - Busca producto por evento change
+  * @method {@link obtenerProductos()}    - Obtiene los productos por nombre con un limitante de 1 busqueda cada 1.5 segundos
+  * @method {@link buscarProductoEnter()} - Busca productos por evento de key press {enter}
+  * @method {@link navigate()}            - Navega a la categoria seleccionada
+  */
+```
+### Documentación de parametros
+```ts
+ /**
+ * @param {CuponInterface} cupon                   - Cupon a aplicar
+ * @param {ProductoInterface[]} dataCarrito - Productos del carrito, se usaran para ver el descuento que tendra
+ * @param {MessageService} messageService          - Servicio de mensajes de primeng
+ * 
+ */
+```
+### Documentación de componentes
+Podemos dar una descripción y los casos de usos que pueden existir en el componente
+```ts
+ /**
+ * @author Chris Cobos
+ * @version 1.0.0
+ * ------------------------------------- DESCRIPCION -----------------------------------------------------------------------------
+ * se encarga de aplicar los descuentos de los cupones a los productos del carrito de compras
+ * 
+ * ------------------------------------- ALCACNCE DE LOS CUPONES -----------------------------------------------------------------
+ * 1. Descuento por todos los productos marca, solo aplicara en productos de la marca
+ * 2. Descuento por producto especifico marca, solo aplicara en el producto especifico de la marca
+ * 3. Descuento por categoria, solo aplicara en productos de la categoria
+ */
 ```
 
 # CleanArquitecture
