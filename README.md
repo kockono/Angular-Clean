@@ -688,10 +688,9 @@ el @link solo funcionara si se encuentra dentro de la clase o si es una function
 ### Documentación de parametros
 ```ts
  /**
- * @param {CuponInterface} cupon                   - Cupon a aplicar
+ * @param {CuponInterface} cupon            - Cupon a aplicar
  * @param {ProductoInterface[]} dataCarrito - Productos del carrito, se usaran para ver el descuento que tendra
- * @param {MessageService} messageService          - Servicio de mensajes de primeng
- * 
+ * @param {MessageService} messageService   - Servicio de mensajes de primeng
  */
 ```
 ### Documentación de componentes
