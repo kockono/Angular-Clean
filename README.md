@@ -469,8 +469,153 @@ export function isValidForm2(simpleForm:any):boolean {
 ```
 
 ## Utils
+Son generalmente utilidades con proposito de crear cosas genericas que pueden ser utilizadas en múltiples áreas del código. Un ejemplo claro podría ser alertas globales, toas globales que solo reciban como parametro algun mensaje, alguna promesa etc.
 ```ts
+export class SweetAlertUtil {
 
+  successNotification( { title = 'Operación exitosa', html = '' } = {}) {
+    Swal.fire({
+      icon: 'success',
+      title,
+      html,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
+  alertConfirmation(
+    title               : string = '¿Deseas continuar con esta acción?',
+    text                : string = 'Este proceso es irreversible.',
+    imageUrl            : string = 'assets/icons2/verify.svg',
+    imageWidth          : number =  400,
+    imageHeight         : number =  200,
+    confirmButtonText   : string = 'Aceptar',
+    cancelButtonText    : string = 'Cancelar',
+  ) : Promise<boolean> {
+      return new Promise( resolve => { 
+          Swal.fire({
+            title,
+            text,
+            imageUrl,
+            imageWidth,
+            imageHeight,
+            showCancelButton: true,
+            reverseButtons: true,
+            cancelButtonText,
+            confirmButtonText,
+            cancelButtonColor: 'transparent',
+            confirmButtonColor: '#A8227F',
+            customClass: {
+              cancelButton: 'btn-outline-blue'
+            }
+          }).then((result) => {
+            if (result.value) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Acción Realizada!',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 1500
+              })
+              resolve(true);
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Cancelado',
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 1500
+              })
+              resolve(false);
+            }
+    });
+});
+}
+
+  errorNotification(message:string = 'Error 404') {
+    Swal.fire('Error', message, 'error');
+  }
+
+}
+```
+
+## Interceptors
+Permite interceptar la informacion de las peticiones http, util para el manejo de errores de manera global
+file: ````
+```ts
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler,  HttpInterceptor, HttpRequest } from '@angular/common/http';
+
+// Rxjs
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class InterceptorHandleErrorsService implements HttpInterceptor {
+
+ /**
+ *  En esta sección tenemos el manejo de errores antes de que se haga la petición, este interceptor afecta a todos los.
+ *  servicios de la aplicación
+ */
+  constructor() { }
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    const cloneRequest = req.clone();
+
+    return next.handle( cloneRequest ).pipe(
+      catchError( this.handleError )
+    );
+  }
+
+
+private handleError(error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) {
+  console.log(error)
+  let message:string;
+
+  if (error.status == 400) {
+    message = error.error[0];
+  }
+  else if (error.status == 422) {
+    // A client-side or network error occurred. Handle it accordingly.
+    message = error.error.errors;
+    console.error(error.error.errors);
+  }
+  else if(error.status == 401) {
+    message = 'Se ha presentado un error de autorización: '+ error.error.message;
+    console.error(message);
+  }
+  else if(error.status == 499) {
+    // A timeout error
+    message = 'Se ha presentado un error de tiempo: '+ error.error.message;
+    console.error(message);
+  }
+  else if (error.error instanceof ErrorEvent) {
+    // A client-side or network error occurred. Handle it accordingly.
+    message = 'Se ha presentado un error: ' + error.error.message;
+    console.error(message);
+  }
+  else if (error.status == 404) {
+    // A client-side or network error occurred. Handle it accordingly.
+    message = 'Se ha presentado un error, por favor intente más tarde. (00):';
+    console.error('El servicio devolvió un error código ' + error.status + ' con mensaje: ' + error.message);
+  }
+  else {
+    // The backend returned an unsuccessful response code.
+    // The response body may contain clues as to what went wrong,
+    message = 'Se ha presentado un error, por favor intente más tarde. error code: ' + error.status + ' error: ' + error.message;
+    console.error('El servicio devolvió un error código ' + error.status + ' con mensaje: ' + error.message);
+  }
+  if(error.status == 500) {
+    message = 'Se ha presentado un error en el servidor, intentelo mas tarde: ' + error.status + ' error: ' + error.message;
+  }
+  return throwError(( ) => new Error(message));
+
+}
+
+}
 ```
 
 ## SonnarQube
