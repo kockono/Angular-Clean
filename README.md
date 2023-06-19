@@ -820,7 +820,7 @@ En esta sección permite saber que tipos de usuario existen y donde se obtiene e
 ### Documentación en 1 sola linea
 ```ts
   /** Guarda el estado del usuario {@link isLogged()} */
-``
+```
 
 ### Documentación de metodos
 Podemos utilizar @author para saber quien creo la sección, la versión comunmente es mas utilizada en clases o componentes globales, un dato importante
