@@ -819,7 +819,7 @@ En esta sección permite saber que tipos de usuario existen y donde se obtiene e
 
 ### Documentación en 1 sola linea
 ```ts
-  /** Guarda el estado del usuario {@link isLogged()} */
+/** Guarda el estado del usuario {@link isLogged()} */
 ```
 
 ### Documentación de metodos
