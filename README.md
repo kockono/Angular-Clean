@@ -807,7 +807,7 @@ import { ReactiveFormsModule  } from '@angular/forms';
 # Documentacion
 La documentación permite tener comprensión en los procesos, metodos, variables etc.
 
-#### Documentación de variables
+### Documentación de variables
 En esta sección permite saber que tipos de usuario existen y donde se obtiene el tipo del usuario linkeando al metodo tambien podemos poner un @example
 ```ts
   /** 
@@ -815,7 +815,10 @@ En esta sección permite saber que tipos de usuario existen y donde se obtiene e
    * @example 'cliente' | 'marca'
    */
   public tipoUsuario  : string  = '';
-```
+### Documentación en 1 sola linea
+```ts
+  /** Guarda el estado del usuario {@link isLogged()} */
+``
 ### Documentación de metodos
 Podemos utilizar @author para saber quien creo la sección, la versión comunmente es mas utilizada en clases o componentes globales, un dato importante
 el @link solo funcionara si se encuentra dentro de la clase o si es una function fuera de la clase, también podemos usar function si no esta dentro de una clase
