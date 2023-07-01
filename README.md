@@ -454,7 +454,9 @@ npm run release
 Las funciones helpers resuelven, son  una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros procesos, como lo son son formularios entre otros.
 En este ejemplo valida un formulario que sea valido y tambien toca todos los campos inputs para validar que no esten vacios
 ```ts
-export function isValidForm2(simpleForm:any):boolean {
+import { FormGroup } from '@angular/forms';
+
+export function isValidForm2(simpleForm:FormGroup):boolean {
   
   if ( simpleForm.invalid ) { return false; }
 
