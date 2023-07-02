@@ -456,7 +456,7 @@ En este ejemplo valida un formulario que sea valido y tambien toca todos los cam
 ```ts
 import { FormGroup } from '@angular/forms';
 
-export function isValidForm2(simpleForm:FormGroup):boolean {
+export function isValidForm(simpleForm:FormGroup):boolean {
   
   if ( simpleForm.invalid ) { return false; }
 
