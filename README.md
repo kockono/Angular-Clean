@@ -39,27 +39,28 @@ frontend/src/
 │      │          └── confirm-toast.ts
 │      │    ├── interfaces
 │      │    ├── resolvers
-│      │          └── servicio.resolver.ts
+│      │    │     └── servicio.resolver.ts
 │      │    ├── pages
-│      │          ├── pages.routing.ts
-│      │          └── pages.module.ts
+│      │    │     ├── pages.routing.ts
+│      │    │     └── pages.module.ts
 │      │    ├── models
 │      │    ├── shared
-│      │          ├── navbar.ts
-│      │          ├── breadcrumbs.ts
-│      │          └── shared.module.ts
+│      │    │     ├── navbar.ts
+│      │    │     ├── breadcrumbs.ts
+│      │    │     └── shared.module.ts
+│      │    ├── guards
+│      │    ├── app.module.ts
+│      │    ├── app.routing.module.ts
 │      │    ├── interceptors
-│      │    └── guards
-│      ├── assets
+│      │    └── app.component.ts
+│      ├── enviroments
+│      └── assets
 │      │    ├── dictionarios
 │      │    ├── images
 │      │    ├── icons
 │      │    ├── js
 │      │    ├── mock
 │      │    └── css
-│      ├── app.component.ts
-│      ├── app.module.ts
-│      └── app.routing.module.ts
 ├── node_modules/
 ├── .github
 │      └── workflows
@@ -458,7 +459,7 @@ import { FormGroup } from '@angular/forms';
 
 export function isValidForm(simpleForm:FormGroup):boolean {
   
-  if ( simpleForm.invalid ) { return false; }
+  if ( !simpleForm.invalid ) { return false; }
 
     Object.values(simpleForm.controls).forEach((control) => {
       if (control instanceof FormGroup) 
