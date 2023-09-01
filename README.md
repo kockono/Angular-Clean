@@ -178,6 +178,14 @@ export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
   }  
 }
 ```
+`Implementacion en tu componente`
+```ts
+  private carritoSubscription !: Subscription;
+
+  this.carritoSubscription = this.route.data.subscribe((data: any) => {
+          // Manejo de logica aquí
+    })
+```
 
 ## Eslint Prettier
 
