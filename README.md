@@ -165,7 +165,7 @@ Utilizado cuando existe solo ciertos criterios o posibles casos
 ```ts
 type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre';
 ```
-## Resolvers
+## Resolvers (Deprecrate 6.4 Rxjs)
 Permite recuperar la informacion antes de que se cargue, un ejemplo es cuando hacemos click a un link y queremos precargar la información o en un buscador antes de hacer click al producto pre cargar la información del producto.
 ```ts
 export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
