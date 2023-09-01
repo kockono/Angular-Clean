@@ -178,7 +178,7 @@ export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
   }  
 }
 ```
-### Implementacion en tu componente
+### Implementacion en tu component.ts
 ```ts
   private carritoSubscription !: Subscription;
 
@@ -187,6 +187,16 @@ export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
     })
 ```
 Obtenemos la data de `route.data.subscribe()`, como si fuera un observador
+
+### Implementación en tu app.routing.ts
+```ts
+  {
+    path : 'carrito-paso-uno', 
+    data: { title: 'Carrito' },
+    component: CarritoPasoUnoComponent,
+    resolve: [() => inject(CarritoResolver).resolve()]
+  },
+```
 
 ## Eslint Prettier
 
