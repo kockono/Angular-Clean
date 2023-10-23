@@ -396,6 +396,10 @@ root/
 ```sh
 echo > CHANGELOG.md && mkdir .husky && cd .husky && echo npx commitlint --edit > commit-msg && cd ..
 ```
+### Crear .gitignore
+```sh
+echo > .gitignore "node_modules/ \n.husky \npackage-lock.json" 
+```
 
 ### Configuración basica en package.json
 ```sh
