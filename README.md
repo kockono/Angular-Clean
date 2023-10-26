@@ -496,7 +496,7 @@ export const IsAuthUserGuard: CanActivateFn = ( route: ActivatedRouteSnapshot, s
 ###### Simple Mode
 ```ts
 export const IsAuthUserGuard: CanActivateFn = ( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):boolean => {
-  return inject(AuthUserGuard).canActivate(route, state);
+  return true;
 }
 ```
 
