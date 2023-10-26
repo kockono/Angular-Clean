@@ -479,15 +479,26 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 })
 
 export class AuthUserGuard {
+export class AuthUserGuard {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
     return true;
   }
-  
+}
+
+export const IsAuthUserGuard: CanActivateFn = ( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):boolean => {
+  return inject(AuthUserGuard).canActivate(route, state);
 }
 ```
 `note:` CanActivate fue depreciado en la versión 15 de Angular
+
+###### Simple Mode
+```ts
+export const IsAuthUserGuard: CanActivateFn = ( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):boolean => {
+  return inject(AuthUserGuard).canActivate(route, state);
+}
+```
 
 ## Helpers
 Las funciones helpers resuelven, son  una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros procesos, como lo son son formularios entre otros.
