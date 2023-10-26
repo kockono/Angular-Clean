@@ -471,8 +471,23 @@ npm run release
 
 ## Guards
 ```ts
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
+@Injectable({
+  providedIn: 'root'
+})
+
+export class AuthUserGuard {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): boolean {
+    return true;
+  }
+  
+}
 ```
+`note:` CanActivate fue depreciado en la versión 15 de Angular
 
 ## Helpers
 Las funciones helpers resuelven, son  una forma de agrupar funciones de uso común, destinadas a servir de ayuda a otros procesos, como lo son son formularios entre otros.
