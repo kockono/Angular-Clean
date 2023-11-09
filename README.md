@@ -1,6 +1,6 @@
 [Example](https://github.com/kockono/Angular-Clean)
 
-#  Angular 15.2.4 (Rxjs 7.0)
+#  Angular 16.2.10 (Rxjs 7.0)
 1. [Arquitectura de inicio de proyecto](#arquitectura-de-inicio-de-proyecto)
 2. [Models](#modelos)
 3. [Interfaces](#interfaces)
