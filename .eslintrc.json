@@ -21,7 +21,6 @@
             "type": "attribute",
             "prefix": "app",
             "style": "camelCase"
-            
           }
         ],
         "@angular-eslint/component-selector": [
@@ -35,15 +34,25 @@
         "max-len": [
           "error",
           {
-              "code": 130 ,
-              "ignoreComments": true,
-              "ignoreUrls": true,
-              "ignoreStrings": true,
-              "ignoreTemplateLiterals": true
+            "code": 130,
+            "ignoreComments": true,
+            "ignoreUrls": true,
+            "ignoreStrings": true,
+            "ignoreTemplateLiterals": true
           }
         ],
-        "max-nested-callbacks": ["error", 3], // Maximo de anidación en Ifs, functions etc.
-        "max-lines-per-function": [ "warn", { "max": 20, "skipBlankLines": true, "skipComments": true } ],
+        "max-nested-callbacks": [
+          "error",
+          3
+        ],
+        "max-lines-per-function": [
+          "warn",
+          {
+            "max": 20,
+            "skipBlankLines": true,
+            "skipComments": true
+          }
+        ],
         "@typescript-eslint/no-inferrable-types": [
           2,
           {
@@ -53,7 +62,6 @@
         ]
       }
     },
-
     {
       "files": [
         "*.html"
