@@ -16,7 +16,7 @@
 8. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
 9. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
 10. [Karma](#karma-config) [(Documentación Oficial)](https://karma-runner.github.io/latest/index.html)
-11. [Documentacion](#Documentacion)
+11. [Documentacion-codigo](#Documentacion-codigo)
 
 ## Arquitectura de inicio de proyecto
 ```sh
@@ -858,6 +858,7 @@ import { ReactiveFormsModule  } from '@angular/forms';
 ```
 # Documentacion
 La documentación permite tener comprensión en los procesos, metodos, variables etc.
+referencia: https://tsdoc.org/
 
 ### Documentación de variables
 En esta sección permite saber que tipos de usuario existen y donde se obtiene el tipo del usuario linkeando al metodo tambien podemos poner un @example
