@@ -401,6 +401,10 @@ echo > CHANGELOG.md && mkdir .husky && cd .husky && echo npx commitlint --edit >
 ```sh
 echo > .gitignore "node_modules/ \n.husky \npackage-lock.json" 
 ```
+### Instalar Husky
+```sh
+npm i -D husky
+```
 
 ### Configuración basica en package.json
 ```sh
