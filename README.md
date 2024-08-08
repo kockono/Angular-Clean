@@ -93,7 +93,7 @@ frontend/src/
 ```sh
 {
   "compileOnSave": false,
-  "exclude": ["karma.conf.ts"],
+  "exclude": ["karma.conf.js"],
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -295,7 +295,7 @@ filename: `.eslintrc.json`
 ### Ignorar Archivos 
 Filename `.eslintignore`
 ```sh
-karma.conf.ts
+karma.conf.js
 .gitignore
 .scannerwork/
 .husky/
@@ -775,7 +775,19 @@ npm install cypress --save-dev
 ```
 
 ## Karma Config
-
+#### Importante importarlo en 
+Filename: Angular.json`
+```json
+ "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "karmaConfig": "karma.conf.js",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json"
+```
 Filename: `karma.conf.ts`
 ```ts
 // Karma configuration file, see link for more information
