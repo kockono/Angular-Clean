@@ -1,23 +1,27 @@
 [Example](https://github.com/kockono/Angular-Clean)
 
-#  Angular 17.0.1 (Rxjs 7.0)
+#  Angular 20 LTS (RxJS 7.x)
 1. [Arquitectura de inicio de proyecto](#arquitectura-de-inicio-de-proyecto)
 2. [Models](#modelos)
 3. [Interfaces](#interfaces)
 4. [Types](#types)
 5. [Directives](#Directives)
-6. [Resolvers](#resolvers)[(Documentacion-Oficial)](https://angular.io/api/router/Resolve)
+6. [Resolvers](#resolvers)
 7. [Guards](#guards)
 8. [Helpers](#helpers)
 9. [Utils](#utils)
 10. [Interceptors](#interceptors)
-11. [Eslint Prettier](#eslint-prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
-12. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
-13. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
-14. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
-15. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
-16. [Karma](#karma-config) [(Documentación Oficial)](https://karma-runner.github.io/latest/index.html)
-17. [Documentacion-codigo](#Documentacion-codigo)
+11. [Signals](#Signals) ⭐ nuevo
+12. [Control-Flow](#Control-Flow) ⭐ nuevo
+13. [Eslint Prettier](#eslint-prettier) [(Documentación Prettier)](https://prettier.io/) [(Documentación Eslint)](https://eslint.org/)
+14. [Automatic-Changelog](#Automatic-CHANGELOG) [(Documentacion Commits)](https://www.conventionalcommits.org/en/v1.0.0/)
+15. [SonnarQube](#SonnarQube) [(Documentación Oficial)](https://docs.sonarqube.org/latest/)
+16. [Sentry](#Sentry) [(Documentación Oficial)](https://sentry.io/for/angular/)
+17. [Cypress](#Cypress) [(Documentación Oficial)](https://docs.cypress.io/guides/getting-started/installing-cypress)
+18. [Karma](#karma-config) [(Documentación Oficial)](https://karma-runner.github.io/latest/index.html)
+19. [Documentacion-codigo](#Documentacion-codigo)
+20. [Performance](#Performance)
+21. [Bundle](#Bundle)
 
 ## Arquitectura de inicio de proyecto
 ```sh
@@ -90,7 +94,7 @@ frontend/src/
 │      │    └── name.component.scss
 ```
 ## Configuración Tsconfig
-```sh
+```json
 {
   "compileOnSave": false,
   "exclude": ["karma.conf.js"],
@@ -105,10 +109,10 @@ frontend/src/
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
+    "verbatimModuleSyntax": true,
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
@@ -125,6 +129,9 @@ frontend/src/
   }
 }
 ```
+> `"moduleResolution": "bundler"` — reemplaza `"node"` en Angular 17+, optimizado para bundlers modernos (esbuild/Vite).
+> `"verbatimModuleSyntax": true` — fuerza el uso de `import type` cuando corresponde, mejorando el bundle automáticamente.
+
 #### Usar Exclude para ignorar archivos
 
 ## Modelos
@@ -166,38 +173,218 @@ Utilizado cuando existe solo ciertos criterios o posibles casos
 ```ts
 type EstadoCivil = 'soltero' | 'casado' | 'divorciado' | 'viudo' | 'union libre';
 ```
-## Resolvers (Deprecrate 6.4 Rxjs)
-Permite recuperar la informacion antes de que se cargue, un ejemplo es cuando hacemos click a un link y queremos precargar la información o en un buscador antes de hacer click al producto pre cargar la información del producto.
+## Resolvers
+> ⚠️ `Resolve<T>` (clase) fue deprecado en Angular 14.2. Usá **functional resolvers** con `inject()`.
+
+Permite recuperar la información antes de que el componente se cargue. Ideal para precargar datos de un producto antes de navegar a su detalle.
+
+### Functional Resolver (Angular 15+, recomendado)
 ```ts
-export class ProductosResolver implements Resolve<Observable<ProductosEntity>> {
+// products.resolver.ts
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
+import type { ProductInterface } from '../interfaces/product.interface';
 
-  constructor( public service:EndpointsService) { }
+export const productsResolver: ResolveFn<ProductInterface[]> = (route, state) => {
+  return inject(ProductsService).getAll();
+};
+```
 
-  resolve(route: ActivatedRouteSnapshot ){
-    return this.service.getProducto().pipe(
-      catchError( error => of(error));
-  }  
+### Implementación en el routing
+```ts
+// app.routing.ts
+{
+  path: 'products',
+  component: ProductsComponent,
+  resolve: { products: productsResolver }
 }
 ```
-### Implementacion en tu component.ts
-```ts
-  private carritoSubscription !: Subscription;
 
-  this.carritoSubscription = this.route.data.subscribe((data: any) => {
-          // Manejo de logica aquí
-    })
-```
-Obtenemos la data de `route.data.subscribe()`, como si fuera un observador
-
-### Implementación en tu app.routing.ts
+### Consumir la data en el componente
 ```ts
-  {
-    path : 'carrito-paso-uno', 
-    data: { title: 'Carrito' },
-    component: CarritoPasoUnoComponent,
-    resolve: [() => inject(CarritoResolver).resolve()]
-  },
+// products.component.ts
+import { inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import type { ProductInterface } from '../interfaces/product.interface';
+
+export class ProductsComponent {
+  private route = inject(ActivatedRoute);
+  products: ProductInterface[] = this.route.snapshot.data['products'];
+}
 ```
+
+# Signals
+
+Los Signals son el nuevo sistema reactivo de Angular (estable desde v17). Reemplazan gradualmente a `@Input`, `@Output`, `@ViewChild` y el modelo basado en Zone.js.
+
+## signal() — estado local
+```ts
+import { signal, computed, effect } from '@angular/core';
+
+count = signal(0); // WritableSignal<number>
+
+increment() {
+  this.count.update(v => v + 1); // actualiza con función
+  // o: this.count.set(5);       // reemplaza el valor
+}
+```
+
+## computed() — valores derivados
+```ts
+price    = signal(100);
+quantity = signal(3);
+total    = computed(() => this.price() * this.quantity()); // solo recalcula si sus dependencias cambian
+```
+
+## effect() — efectos secundarios
+```ts
+constructor() {
+  effect(() => {
+    console.log('El total cambió:', this.total()); // se ejecuta cada vez que total() cambia
+  });
+}
+```
+
+## input() — reemplaza @Input
+```ts
+import { input } from '@angular/core';
+
+// Opcional con valor por defecto
+title = input('Sin título');
+
+// Requerido — lanza error en compilación si no se pasa
+productId = input.required<number>();
+```
+
+## output() — reemplaza @Output + EventEmitter
+```ts
+import { output } from '@angular/core';
+
+productSelected = output<number>();
+
+select(id: number) {
+  this.productSelected.emit(id);
+}
+```
+
+## model() — two-way binding con signals
+```ts
+import { model } from '@angular/core';
+
+// En el componente hijo
+value = model<string>('');
+
+// En el template del padre
+<app-input [(value)]="mySignal" />
+```
+
+## viewChild() / viewChildren() — reemplaza @ViewChild
+```ts
+import { viewChild, viewChildren, ElementRef } from '@angular/core';
+
+inputRef   = viewChild<ElementRef>('inputRef');           // Signal<ElementRef | undefined>
+listItems  = viewChildren<ElementRef>('item');            // Signal<readonly ElementRef[]>
+```
+
+## linkedSignal() — signal derivado y modificable (Angular 19+)
+```ts
+import { linkedSignal } from '@angular/core';
+
+// Se recalcula cuando source cambia, pero también puede modificarse manualmente
+selectedIndex = linkedSignal(() => this.items().length > 0 ? 0 : -1);
+```
+
+## resource() y httpResource() — datos async como signals (Angular 19+)
+```ts
+import { resource, httpResource } from '@angular/core';
+
+// httpResource — petición HTTP directa como signal
+products = httpResource<ProductInterface[]>('/api/products');
+
+// En el template
+@if (products.isLoading()) { <span>Cargando...</span> }
+@for (p of products.value() ?? []; track p.id) { <li>{{ p.name }}</li> }
+```
+
+---
+
+# Control-Flow
+
+Angular 17+ reemplaza `*ngIf`, `*ngFor` y `*ngSwitch` con una nueva sintaxis de control de flujo nativa. Es más legible y tiene mejor rendimiento.
+
+## @if / @else if / @else — reemplaza *ngIf
+```html
+<!-- ❌ Antes -->
+<div *ngIf="isLogged; else guestBlock">Bienvenido</div>
+<ng-template #guestBlock><div>Invitado</div></ng-template>
+
+<!-- ✅ Ahora -->
+@if (isLogged) {
+  <div>Bienvenido</div>
+} @else if (isPending) {
+  <div>Verificando...</div>
+} @else {
+  <div>Invitado</div>
+}
+```
+
+## @for — reemplaza *ngFor (track es OBLIGATORIO)
+```html
+<!-- ❌ Antes -->
+<li *ngFor="let product of products; trackBy: trackById">{{ product.name }}</li>
+
+<!-- ✅ Ahora — track es parte de la sintaxis, no opcional -->
+@for (product of products; track product.id) {
+  <li>{{ product.name }}</li>
+} @empty {
+  <li>No hay productos.</li>
+}
+```
+> `@empty` es un bloque nuevo que se muestra cuando el array está vacío — en *ngFor necesitabas un *ngIf extra.
+
+## @switch — reemplaza ngSwitch
+```html
+<!-- ❌ Antes -->
+<div [ngSwitch]="status">
+  <span *ngSwitchCase="'active'">Activo</span>
+  <span *ngSwitchCase="'inactive'">Inactivo</span>
+  <span *ngSwitchDefault>Desconocido</span>
+</div>
+
+<!-- ✅ Ahora -->
+@switch (status) {
+  @case ('active')   { <span>Activo</span>   }
+  @case ('inactive') { <span>Inactivo</span> }
+  @default           { <span>Desconocido</span> }
+}
+```
+
+## @defer — carga diferida declarativa
+Cargá componentes pesados solo cuando sean necesarios. Angular crea un chunk separado automáticamente.
+```html
+<!-- Carga cuando el bloque entra en el viewport -->
+@defer (on viewport) {
+  <app-heavy-chart />
+} @placeholder {
+  <div class="skeleton">Cargando gráfico...</div>
+} @loading (minimum 300ms) {
+  <app-spinner />
+} @error {
+  <p>Error al cargar el componente.</p>
+}
+```
+
+### Triggers disponibles para @defer
+| Trigger | Descripción |
+|---|---|
+| `on viewport` | Cuando el placeholder entra en el viewport |
+| `on idle` | Cuando el browser está ocioso |
+| `on interaction` | Al hacer click o focus |
+| `on hover` | Al hacer hover |
+| `on timer(2s)` | Después de X tiempo |
+| `when condition` | Cuando una condición es `true` |
+
+---
 
 ## Eslint Prettier
 
@@ -597,82 +784,66 @@ export class SweetAlertUtil {
 ```
 
 ## Interceptors
-Permite interceptar la informacion de las peticiones http, util para el manejo de errores de manera global
-file: ````
+> ⚠️ `HttpInterceptor` (clase) fue deprecado en Angular 18. Usá **functional interceptors** con `HttpInterceptorFn`.
+
+### Functional Interceptor (Angular 15+, recomendado)
 ```ts
-import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpEvent, HttpHandler,  HttpInterceptor, HttpRequest } from '@angular/common/http';
+// error-handler.interceptor.ts
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 
-// Rxjs
-import { catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      const messages: Record<number, string> = {
+        400: error.error?.[0] ?? 'Bad Request',
+        401: `Error de autorización: ${error.error?.message}`,
+        404: 'Recurso no encontrado (404)',
+        422: error.error?.errors,
+        499: `Error de tiempo: ${error.error?.message}`,
+        500: `Error del servidor: ${error.message}`,
+      };
 
-@Injectable({
-  providedIn: 'root'
-})
-export class InterceptorHandleErrorsService implements HttpInterceptor {
+      const message = messages[error.status] ?? `Error inesperado (${error.status}): ${error.message}`;
+      console.error(message);
+      return throwError(() => new Error(message));
+    })
+  );
+};
+```
 
- /**
- *  En esta sección tenemos el manejo de errores antes de que se haga la petición, este interceptor afecta a todos los.
- *  servicios de la aplicación
- */
-  constructor() { }
+### Auth Interceptor (adjuntar token)
+```ts
+// auth.interceptor.ts
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = inject(AuthService).getToken();
 
-    const cloneRequest = req.clone();
+  if (!token) return next(req);
 
-    return next.handle( cloneRequest ).pipe(
-      catchError( this.handleError )
-    );
-  }
+  return next(req.clone({
+    headers: req.headers.set('Authorization', `Bearer ${token}`)
+  }));
+};
+```
 
+### Registrar interceptores en app.config.ts
+```ts
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './interceptors/auth.interceptor';
+import { errorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 
-private handleError(error: HttpErrorResponse, caught: Observable<HttpEvent<any>>) {
-  console.log(error)
-  let message:string;
-
-  if (error.status == 400) {
-    message = error.error[0];
-  }
-  else if (error.status == 422) {
-    // A client-side or network error occurred. Handle it accordingly.
-    message = error.error.errors;
-    console.error(error.error.errors);
-  }
-  else if(error.status == 401) {
-    message = 'Se ha presentado un error de autorización: '+ error.error.message;
-    console.error(message);
-  }
-  else if(error.status == 499) {
-    // A timeout error
-    message = 'Se ha presentado un error de tiempo: '+ error.error.message;
-    console.error(message);
-  }
-  else if (error.error instanceof ErrorEvent) {
-    // A client-side or network error occurred. Handle it accordingly.
-    message = 'Se ha presentado un error: ' + error.error.message;
-    console.error(message);
-  }
-  else if (error.status == 404) {
-    // A client-side or network error occurred. Handle it accordingly.
-    message = 'Se ha presentado un error, por favor intente más tarde. (00):';
-    console.error('El servicio devolvió un error código ' + error.status + ' con mensaje: ' + error.message);
-  }
-  else {
-    // The backend returned an unsuccessful response code.
-    // The response body may contain clues as to what went wrong,
-    message = 'Se ha presentado un error, por favor intente más tarde. error code: ' + error.status + ' error: ' + error.message;
-    console.error('El servicio devolvió un error código ' + error.status + ' con mensaje: ' + error.message);
-  }
-  if(error.status == 500) {
-    message = 'Se ha presentado un error en el servidor, intentelo mas tarde: ' + error.status + ' error: ' + error.message;
-  }
-  return throwError(( ) => new Error(message));
-
-}
-
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withInterceptors([authInterceptor, errorHandlerInterceptor])
+    ),
+  ]
+};
 ```
 
 ## SonnarQube
@@ -866,12 +1037,49 @@ filename: `angular.json`
 
 
 ## Modulos importantes
-#### Formularios, Formularios reactivos, Manejo de peticiones de backend
-filename: `app.module.ts`
-```typescript
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule  } from '@angular/forms';
+> ⚠️ `NgModule` y `HttpClientModule` fueron deprecados en Angular 19. En Angular 20 usá **Standalone Components** con `provideHttpClient`.
+
+### app.config.ts (reemplaza AppModule)
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { routes } from './app.routes';
+import { authInterceptor } from './interceptors/auth.interceptor';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
+    provideZonelessChangeDetection(), // Angular 20 — sin Zone.js
+  ]
+};
+```
+
+### main.ts
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+
+bootstrapApplication(AppComponent, appConfig).catch(console.error);
+```
+
+### Standalone Component
+```ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+})
+export class AppComponent {}
 ```
 # Documentacion
 La documentación permite tener comprensión en los procesos, metodos, variables etc.
@@ -929,6 +1137,169 @@ Podemos dar una descripción y los casos de usos que pueden existir en el compon
  * 3. Descuento por categoria, solo aplicara en productos de la categoria
  */
 ```
+
+# Performance
+
+## Zoneless Change Detection (Angular 20 — recomendado)
+En Angular 20, Zone.js es opcional. Sin Zone.js, Angular solo actualiza el DOM cuando un Signal cambia — sin overhead de monkey-patching de toda la plataforma. Es la estrategia más eficiente disponible.
+```ts
+// app.config.ts
+import { provideZonelessChangeDetection } from '@angular/core';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideZonelessChangeDetection()
+  ]
+};
+```
+> Remové `zone.js` de los `polyfills` en `angular.json` cuando uses zoneless.
+
+## OnPush Change Detection (con Zone.js)
+Si todavía usás Zone.js, `OnPush` es el mínimo recomendado. Solo re-renderiza cuando cambia un `@Input` por referencia o se emite un Observable.
+```ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-product-list',
+  standalone: true,
+  templateUrl: './product-list.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ProductListComponent {}
+```
+
+## TrackBy en *ngFor
+Sin `trackBy`, Angular destruye y recrea TODOS los nodos del DOM cuando cambia el array. Con `trackBy` solo actualiza los elementos que realmente cambiaron.
+```ts
+// ❌ Sin trackBy — recrea todos los nodos
+<li *ngFor="let product of products">{{ product.name }}</li>
+
+// ✅ Con trackBy — solo actualiza lo que cambió
+<li *ngFor="let product of products; trackBy: trackById">{{ product.name }}</li>
+```
+```ts
+trackById(index: number, product: ProductInterface): number {
+  return product.id;
+}
+```
+
+## Pure Pipes en lugar de métodos en templates
+Los métodos en el template se ejecutan en CADA ciclo de detección de cambios. Un `pipe` puro solo se recalcula cuando cambia su input.
+```ts
+// ❌ Método en template — se ejecuta constantemente
+<span>{{ formatPrice(product.price) }}</span>
+
+// ✅ Pure pipe — solo cuando cambia product.price
+<span>{{ product.price | formatPrice }}</span>
+```
+```ts
+@Pipe({ name: 'formatPrice', pure: true })
+export class FormatPricePipe implements PipeTransform {
+  transform(value: number): string {
+    return `$${value.toFixed(2)}`;
+  }
+}
+```
+
+## Lazy Loading de Módulos
+Cargá los módulos solo cuando el usuario navega a esa ruta.
+```ts
+// app.routing.ts
+const routes: Routes = [
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+  }
+];
+```
+
+## Defer Blocks (Angular 17+)
+Con `@defer` podés posponer la carga de componentes pesados hasta que sean visibles o necesarios.
+```html
+@defer (on viewport) {
+  <app-heavy-chart />
+} @placeholder {
+  <div>Cargando gráfico...</div>
+}
+```
+
+---
+
+# Bundle
+
+## `import type` para importaciones de solo tipos
+Cuando importás una interfaz o tipo, usá `import type`. TypeScript lo elimina completamente del bundle en tiempo de compilación porque no genera código JavaScript.
+```ts
+// ❌ Import normal — puede incluirse en el bundle
+import { ProductsOrder } from "../interfaces/products-order-interface";
+
+// ✅ import type — TypeScript lo elimina del bundle, cero overhead
+import type { ProductsOrder } from "../interfaces/products-order-interface";
+```
+> **Habilitalo automáticamente** con `"verbatimModuleSyntax": true` en `tsconfig.json` — TypeScript te va a forzar a usar `import type` cuando corresponda.
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "verbatimModuleSyntax": true
+  }
+}
+```
+
+## Importaciones específicas en lugar de barrel imports
+Un barrel export (`index.ts`) puede hacer que el bundler incluya más código del necesario si no tiene buena capacidad de tree-shaking.
+```ts
+// ❌ Barrel import — puede traer todo el módulo
+import { formatDate, formatCurrency, formatNumber } from '@angular/common';
+
+// ✅ Solo importá lo que usás — facilita el tree-shaking
+import { formatDate } from '@angular/common';
+```
+
+## Tree Shakeable Providers
+Usá `providedIn: 'root'` en lugar de declarar el servicio en `providers[]` del módulo. Si el servicio no se usa, Angular lo elimina del bundle.
+```ts
+// ❌ Declarado en el módulo — siempre se incluye en el bundle
+@NgModule({
+  providers: [ProductService]
+})
+
+// ✅ Tree-shakeable — solo se incluye si hay un consumidor
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {}
+```
+
+## Analizar el Bundle con source-map-explorer
+```sh
+npm install source-map-explorer --save-dev
+```
+```json
+// package.json
+"scripts": {
+  "analyze": "ng build --source-map && source-map-explorer dist/**/*.js"
+}
+```
+```sh
+npm run analyze
+```
+Esto abre un mapa visual para ver qué librerías están ocupando más espacio en tu bundle.
+
+## Standalone Components (Angular 14+)
+Los standalone components eliminan la necesidad de `NgModule`, lo que mejora el tree-shaking porque Angular solo incluye las dependencias que el componente declara explícitamente.
+```ts
+@Component({
+  selector: 'app-product-card',
+  standalone: true,
+  imports: [CommonModule, RouterModule],  // solo lo que usa este componente
+  templateUrl: './product-card.component.html',
+})
+export class ProductCardComponent {}
+```
+
+---
 
 # CleanArquitecture
 
