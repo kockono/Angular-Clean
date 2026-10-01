@@ -71,6 +71,7 @@ src/
     ├── interfaces/    (legado, sin cambios)
     └── pipes/         (legado, sin cambios)
 ```
+<img width="304" height="819" alt="image" src="https://github.com/user-attachments/assets/ed5ae62a-0d8e-472b-81f5-b1ed55d6831d" />
 
 ### Responsabilidades previstas
 
