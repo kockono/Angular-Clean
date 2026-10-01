@@ -31,11 +31,13 @@ Las carpetas nuevas contienen únicamente archivos `.gitkeep` de cero bytes para
 
 ### Estructura y estado actual
 
-El árbol muestra el área de aplicación; cada `.gitkeep` representa una carpeta reservada, no código ejecutable.
+El árbol muestra el área de aplicación y sus carpetas hermanas `assets` y `environments`, ambas existentes directamente en `src`. Se omiten otros archivos de `src`; cada `.gitkeep` representa una carpeta reservada, no código ejecutable.
 
 ```text
 src/
 ├── main.ts
+├── assets/
+├── environments/
 └── app/
     ├── app.module.ts
     ├── app-routing.module.ts
@@ -72,13 +74,70 @@ src/
 
 ### Responsabilidades previstas
 
-| Área | Responsabilidad cuando se añada código |
+Los ejemplos siguientes son ilustrativos: describen qué podría añadirse, no archivos ni comportamientos ya implementados. Las rutas de las tablas parten de `src/app/`, salvo las indicadas con `src/`.
+
+#### Código fuente y recursos
+
+| Carpeta | Qué contiene y para qué sirve |
 | --- | --- |
-| `core/` | Infraestructura transversal: clientes de API comunes en `apis`, autenticación en `auth`, configuración en `config`, controles de acceso en `guards`, interceptores en `interceptors` y estado de sesión en `session`. |
-| `layout/` | Composición visual global: contenedor de la aplicación en `app-shell`, navegación en `navigation` y presentación de página no encontrada en `not-found`. |
-| `features/<feature>/` | Código propio de una funcionalidad: vistas en `pages`, componentes locales en `components`, lógica y acceso a datos específicos en `services`, y contratos de datos en `models`. `example` es solo una referencia neutral. |
-| `shared/` | Componentes, directivas, pipes y utilidades reutilizables que no dependan de una funcionalidad concreta. |
-| `helpers/`, `interfaces/`, `pipes/` | Directorios existentes conservados sin mover ni modificar su código. El nuevo código reutilizable sigue la ubicación correspondiente en `shared/`. |
+| `src/` | Código fuente y recursos de la aplicación; reúne el arranque, la interfaz y los archivos que utiliza la compilación. |
+| `src/app/` | Código Angular: composición raíz, infraestructura, funcionalidades y piezas reutilizables. Conserva `app.module.ts` y `app-routing.module.ts`. |
+| `src/assets/` | Imágenes, iconos y otros recursos estáticos, por ejemplo un logotipo SVG o un archivo JSON público. `angular.json` incluye esta ruta entre los recursos de compilación. |
+| `src/environments/` | Configuración destinada a distintos entornos de compilación, por ejemplo la URL pública de una API o una bandera de funcionalidad. No almacena secretos: los valores incluidos en el cliente son accesibles desde el navegador. |
+
+El nombre real es `environments`, no `enviroments`. La configuración actual de `angular.json` no define `fileReplacements`; la existencia de esta carpeta no implica que sus archivos se seleccionen o sustituyan automáticamente al cambiar de entorno.
+
+#### Infraestructura transversal: `core`
+
+| Carpeta | Responsabilidad y ejemplo |
+| --- | --- |
+| `core/` | Servicios e integración comunes a toda la aplicación, sin lógica exclusiva de una funcionalidad. |
+| `core/apis/` | Clientes de API compartidos: encapsulan llamadas a servicios externos, por ejemplo consultar un catálogo común de países. No concentra todas las peticiones de las funcionalidades. |
+| `core/auth/` | Operaciones de autenticación, por ejemplo iniciar o cerrar sesión con el proveedor de identidad. Responde a cómo se autentica el usuario. |
+| `core/session/` | Estado de la sesión actual, por ejemplo el usuario identificado y sus permisos disponibles. Responde a quién está conectado y cuál es su estado, sin sustituir el flujo de autenticación. |
+| `core/guards/` | Condiciones de acceso o salida de rutas, por ejemplo exigir una sesión antes de mostrar una página. No sustituyen la autorización del servidor. |
+| `core/interceptors/` | Tratamiento transversal de peticiones y respuestas HTTP, por ejemplo adjuntar una cabecera a la API propia o normalizar errores. No decide qué página mostrar. |
+| `core/config/` | Configuración común consumida por el código, por ejemplo tokens de inyección y valores predeterminados. Puede exponer valores de `environments`, pero no configura por sí sola su selección durante la compilación. |
+
+#### Composición visual: `layout`
+
+| Carpeta | Responsabilidad y ejemplo |
+| --- | --- |
+| `layout/` | Estructura visual común que rodea las páginas, sin concentrar sus reglas de negocio. |
+| `layout/app-shell/` | Contenedor visual principal: distribuye cabecera, barra lateral y zona de contenido donde se mostraría la página activa mediante `router-outlet`. Aquí significa estructura de interfaz, no una implementación de renderizado o caché sin conexión. |
+| `layout/navigation/` | Piezas para desplazarse por la aplicación, por ejemplo menú lateral, enlaces y migas de pan. El shell las coloca; la navegación ofrece destinos; las páginas muestran el contenido de cada funcionalidad. |
+| `layout/not-found/` | Vista para una dirección sin ruta coincidente, por ejemplo un mensaje de página no encontrada y un enlace de regreso. Requiere integrar la ruta correspondiente para funcionar. |
+
+#### Funcionalidades: `features`
+
+| Carpeta | Responsabilidad y ejemplo |
+| --- | --- |
+| `features/` | Agrupa cada funcionalidad con su interfaz, lógica y datos, en lugar de reunir todo por tipo técnico. |
+| `features/example/` | Reserva neutral que muestra cómo organizar una funcionalidad futura; no implementa una funcionalidad de ejemplo. |
+| `features/example/pages/` | Vistas completas asociadas a rutas que coordinan datos y componentes, por ejemplo una página de listado de registros. No contienen el marco visual global del shell. |
+| `features/example/components/` | Piezas de interfaz exclusivas de esa funcionalidad, por ejemplo un filtro o una tarjeta de registro utilizados por sus páginas. |
+| `features/example/services/` | Lógica y acceso a datos específicos, por ejemplo consultar y guardar registros de la funcionalidad. Puede apoyarse en clientes comunes de `core/apis`. |
+| `features/example/models/` | Tipos, interfaces o clases que representan sus datos, por ejemplo un registro, sus filtros y la respuesta paginada. No necesitan compartirse si solo se usan aquí. |
+
+#### Piezas reutilizables: `shared`
+
+| Carpeta | Responsabilidad y ejemplo |
+| --- | --- |
+| `shared/` | Piezas reutilizables independientes de una funcionalidad concreta, de la sesión y del layout global. |
+| `shared/components/` | Componentes con interfaz propia, por ejemplo un indicador de carga o un cuadro de confirmación configurable. |
+| `shared/directives/` | Comportamientos aplicados a elementos existentes sin crear una vista propia, por ejemplo dar foco a un campo. |
+| `shared/pipes/` | Transformaciones de valores para mostrarlos en plantillas, por ejemplo convertir un valor ausente en una etiqueta mediante `value \| fallback`. No realizan operaciones de negocio ni peticiones HTTP. |
+| `shared/utils/` | Funciones auxiliares genéricas llamadas desde TypeScript, por ejemplo normalizar texto o eliminar duplicados. A diferencia de un pipe, no requieren la sintaxis de transformación de una plantilla. |
+
+#### Directorios de legado conservados
+
+| Carpeta | Papel y criterio para código nuevo |
+| --- | --- |
+| `helpers/` | Agrupa funciones de ayuda para otros procesos, por ejemplo marcar campos de un formulario como visitados. El nombre no implica una capa especial: las nuevas utilidades genéricas corresponden a `shared/utils`; las específicas permanecen en su funcionalidad. |
+| `interfaces/` | Contratos TypeScript que describen la forma de los datos, por ejemplo los campos de una respuesta. No validan por sí solos los datos en ejecución. Los contratos nuevos propios de una funcionalidad corresponden a sus `models`. |
+| `pipes/` | Ubicación anterior de transformaciones para plantillas, por ejemplo una etiqueta de presentación. Los nuevos pipes reutilizables corresponden a `shared/pipes`; los específicos permanecen en su funcionalidad. |
+
+Estos tres directorios existentes se conservan sin mover ni modificar su código. La guía no implica una migración automática ni convierte los archivos `.gitkeep` en una implementación funcional.
 
 ### Guías de dependencia y crecimiento
 
