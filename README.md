@@ -24,75 +24,70 @@
 21. [Bundle](#Bundle)
 
 ## Arquitectura de inicio de proyecto
-```sh
-frontend/src/
-│      ├── app
-│      │    ├── components
-│      │    │     ├── component-name
-│      │    │     │    ├── name.validation.component.ts
-│      │    │     │    ├── name.component.ts
-│      │    │     │    ├── name.component.html
-│      │    │     │    └── name.component.scss
-│      │    │     └── components.module.ts
-│      │    ├── auth
-│      │          └── auth.module.ts
-│      │    ├── 404
-│      │    ├── helpers
-│      │    ├── services
-│      │    ├── pipes
-│      │    ├── utils
-│      │          └── confirm-toast.ts
-│      │    ├── interfaces
-│      │    ├── resolvers
-│      │    │     └── servicio.resolver.ts
-│      │    ├── pages
-│      │    │     ├── pages.routing.ts
-│      │    │     └── pages.module.ts
-│      │    ├── models
-│      │    ├── shared
-│      │    │     ├── navbar.ts
-│      │    │     ├── breadcrumbs.ts
-│      │    │     └── shared.module.ts
-│      │    ├── guards
-│      │    ├── app.module.ts
-│      │    ├── app.routing.module.ts
-│      │    ├── interceptors
-│      │    └── app.component.ts
-│      ├── enviroments
-│      └── assets
-│      │    ├── dictionarios
-│      │    ├── images
-│      │    ├── icons
-│      │    ├── js
-│      │    ├── mock
-│      │    └── css
-├── node_modules/
-├── .github
-│      └── workflows
-│             ├── build.yml
-│             └── lint.yml
-├── sonar-project.properties
-├── .eslintrc.json
-├── .eslintignore
-├── .env
-├── .gitignore
-├── package.json
-├── package-lock.json
-├── CHANGELOG.md
-└── README.md
+
+La estructura propuesta es **feature-first**: agrupa el código por funcionalidad y separa las responsabilidades transversales. No es una implementación estricta de Clean Architecture ni exige capas de dominio, aplicación e infraestructura.
+
+Las carpetas nuevas contienen únicamente archivos `.gitkeep` de cero bytes para conservarlas en Git. No implementan autenticación, sesión, un shell ni una funcionalidad de ejemplo. El arranque actual con NgModule se mantiene: `src/main.ts` inicia `AppModule` desde `src/app/app.module.ts`, que utiliza `app-routing.module.ts` y `AppComponent`. Las rutas actuales permanecen vacías.
+
+### Estructura y estado actual
+
+El árbol muestra el área de aplicación; cada `.gitkeep` representa una carpeta reservada, no código ejecutable.
+
+```text
+src/
+├── main.ts
+└── app/
+    ├── app.module.ts
+    ├── app-routing.module.ts
+    ├── app.component.ts
+    ├── app.component.html
+    ├── app.component.scss
+    ├── app.component.spec.ts
+    ├── core/
+    │   ├── apis/.gitkeep
+    │   ├── auth/.gitkeep
+    │   ├── config/.gitkeep
+    │   ├── guards/.gitkeep
+    │   ├── interceptors/.gitkeep
+    │   └── session/.gitkeep
+    ├── layout/
+    │   ├── app-shell/.gitkeep
+    │   ├── navigation/.gitkeep
+    │   └── not-found/.gitkeep
+    ├── features/
+    │   └── example/
+    │       ├── pages/.gitkeep
+    │       ├── components/.gitkeep
+    │       ├── services/.gitkeep
+    │       └── models/.gitkeep
+    ├── shared/
+    │   ├── components/.gitkeep
+    │   ├── directives/.gitkeep
+    │   ├── pipes/.gitkeep
+    │   └── utils/.gitkeep
+    ├── helpers/       (legado, sin cambios)
+    ├── interfaces/    (legado, sin cambios)
+    └── pipes/         (legado, sin cambios)
 ```
 
-#### Si existe un componente complejo con demasiadas interfaces, se puede crear una carpeta de modelos y interfaces en el componente
-```sh
-├── components
-│      ├── component-name
-│      │    ├── models
-│      │    ├── interfaces
-│      │    ├── name.validation.component.ts
-│      │    ├── name.component.ts
-│      │    ├── name.component.html
-│      │    └── name.component.scss
-```
+### Responsabilidades previstas
+
+| Área | Responsabilidad cuando se añada código |
+| --- | --- |
+| `core/` | Infraestructura transversal: clientes de API comunes en `apis`, autenticación en `auth`, configuración en `config`, controles de acceso en `guards`, interceptores en `interceptors` y estado de sesión en `session`. |
+| `layout/` | Composición visual global: contenedor de la aplicación en `app-shell`, navegación en `navigation` y presentación de página no encontrada en `not-found`. |
+| `features/<feature>/` | Código propio de una funcionalidad: vistas en `pages`, componentes locales en `components`, lógica y acceso a datos específicos en `services`, y contratos de datos en `models`. `example` es solo una referencia neutral. |
+| `shared/` | Componentes, directivas, pipes y utilidades reutilizables que no dependan de una funcionalidad concreta. |
+| `helpers/`, `interfaces/`, `pipes/` | Directorios existentes conservados sin mover ni modificar su código. El nuevo código reutilizable sigue la ubicación correspondiente en `shared/`. |
+
+### Guías de dependencia y crecimiento
+
+- Las funcionalidades pueden consumir `core` y `shared`; `core` y `shared` no deben importar desde `features`.
+- El código específico de una funcionalidad permanece dentro de ella. No se traslada a `shared` solo por tener el mismo tipo de archivo que otro código.
+- `shared` debe mantenerse independiente de la sesión y de la composición global; `layout` compone la interfaz común sin concentrar lógica de negocio de las funcionalidades.
+- Las carpetas son una guía, no capas obligatorias. Cada funcionalidad incorpora únicamente las divisiones que necesita; no es necesario replicar carpetas vacías ni añadir capas sin una responsabilidad real.
+- Como convención futura y opcional, una funcionalidad con navegación podrá definir `features/<feature>/routes.ts` cuando se implemente e integre su enrutamiento. Este archivo no existe en el esqueleto y no se crean archivos TypeScript vacíos.
+
 ## Configuración Tsconfig
 ```json
 {
